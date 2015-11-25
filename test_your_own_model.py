@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/home/omairhassaan/caffe-master/python")
+sys.path.append("/home/omair/caffe-master/python")
 import caffe
 import numpy as np
 import Image
@@ -9,22 +9,18 @@ import numpy as np
 import lmdb
 caffe_root = '../'
 
-MODEL_FILE = './examples/mnist/lenet.prototxt'
-PRETRAINED = './examples/mnist/lenet_iter_10000.caffemodel'
+MODEL_FILE = '/home/omair/caffe-master/Emotion6/deploy.prototxt'
+PRETRAINED = '/home/omair/caffe-master/Emotion6/Emotion6_iter_90.caffemodel'
+db_path = '/home/omair/caffe-master/Emotion6/emotion6_test'
+
+#MODEL_FILE = '/home/omair/caffe-master/hybridCNN/hybridCNN_deploy.prototxt'
+#PRETRAINED = '/home/omair/caffe-master/hybridCNN/hybridCNN_iter_700000.caffemodel'
 
 net = caffe.Net(MODEL_FILE, PRETRAINED,caffe.TEST)
 net1 = caffe.Classifier(MODEL_FILE, PRETRAINED,
                         raw_scale=255,
-                        image_dims=(28,28))
+                        image_dims=(227,227))
 caffe.set_mode_cpu()
-# Test self-made image
-"""
-img = caffe.io.load_image('./examples/images/two_g.jpg', color=False)
-img = img.astype(np.uint8)
-out = net.forward_all(data=np.asarray([img.transpose(2,0,1)]))
-print out['prob'][0]
-"""
-db_path = '/home/omairhassaan/caffe-master/examples/mnist/mnist_test_lmdb'
 lmdb_env = lmdb.open(db_path)
 lmdb_txn = lmdb_env.begin()
 lmdb_cursor = lmdb_txn.cursor()
@@ -46,7 +42,7 @@ for key, value in lmdb_cursor:
     print image2.shape, image2.dtype
     prediction = net1.predict([image2], oversample=False)
     print "Confidences:", prediction, "\nPredicted Label:", np.argmax(prediction), "\nTrue Label:", label 
-    sys.stdin.read(1)
+    #sys.stdin.read(1)
 
  
 ''' 
