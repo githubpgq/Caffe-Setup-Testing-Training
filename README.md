@@ -6,4 +6,4 @@ Extract caffe-master.zip in your Linux home directory to get started.
 
 Check out the [project site](http://caffe.berkeleyvision.org) for all the details
 I have used modified files (io.py and classify.py) as given here https://github.com/BVLC/caffe.git
-All steps and instructions are given in CaffeInstallation_TrainingTestingSteps.docx.pdf. References also included in this file.
+All steps and instructions to install and play with toolbox are given in pdfs.
